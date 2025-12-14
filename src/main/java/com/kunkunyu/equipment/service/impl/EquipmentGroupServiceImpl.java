@@ -11,7 +11,7 @@ import run.halo.app.extension.ListOptions;
 import run.halo.app.extension.ListResult;
 import run.halo.app.extension.PageRequestImpl;
 import run.halo.app.extension.ReactiveExtensionClient;
-import run.halo.app.extension.index.query.QueryFactory;
+import run.halo.app.extension.index.query.Queries;
 import run.halo.app.extension.router.IListRequest.QueryListRequest;
 import com.kunkunyu.equipment.Equipment;
 import com.kunkunyu.equipment.EquipmentGroup;
@@ -55,7 +55,7 @@ class EquipmentGroupServiceImpl implements EquipmentGroupService {
             .flatMap(this.client::delete)
             .flatMap(deleted -> {
                     var listOptions = ListOptions.builder()
-                        .andQuery(QueryFactory.equal("spec.groupName", name))
+                        .andQuery(Queries.equal("spec.groupName", name))
                         .build();
                     return this.client.listAll(Equipment.class, listOptions, Sort.unsorted())
                         .flatMap(this.client::delete)

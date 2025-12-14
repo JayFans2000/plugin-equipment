@@ -46,7 +46,6 @@ public class EquipmentQuery extends SortableRequest {
                 .name("group")
                 .description("equipment group name")
                 .implementation(String.class)
-                .required(false))
-        ;
+                .required(false));
     }
 }

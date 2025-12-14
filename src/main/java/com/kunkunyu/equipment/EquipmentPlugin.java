@@ -1,13 +1,13 @@
 package com.kunkunyu.equipment;
 
-import static run.halo.app.extension.index.IndexAttributeFactory.simpleAttribute;
 
 import org.springframework.stereotype.Component;
 import run.halo.app.extension.Scheme;
 import run.halo.app.extension.SchemeManager;
-import run.halo.app.extension.index.IndexSpec;
+import run.halo.app.extension.index.IndexSpecs;
 import run.halo.app.plugin.BasePlugin;
 import run.halo.app.plugin.PluginContext;
+import java.util.Optional;
 
 @Component
 public class EquipmentPlugin extends BasePlugin {
@@ -21,33 +21,35 @@ public class EquipmentPlugin extends BasePlugin {
     @Override
     public void start() {
         schemeManager.register(Equipment.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.groupName")
-                .setIndexFunc(simpleAttribute(Equipment.class, equipment ->
-                    equipment.getSpec() == null ? "" : equipment.getSpec().getGroupName()
-                ))
+            indexSpecs.add(IndexSpecs.<Equipment, String>single("spec.groupName", String.class)
+                .indexFunc(
+                    equipment -> Optional.ofNullable(equipment.getSpec())
+                        .map(Equipment.EquipmentSpec::getGroupName)
+                        .orElse(null)
+                )
             );
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.displayName")
-                .setIndexFunc(simpleAttribute(Equipment.class, equipment ->
-                    equipment.getSpec() == null ? "" : equipment.getSpec().getDisplayName()
-                ))
+            indexSpecs.add(IndexSpecs.<Equipment, String>single("spec.displayName", String.class)
+                .indexFunc(
+                    equipment -> Optional.ofNullable(equipment.getSpec())
+                        .map(Equipment.EquipmentSpec::getDisplayName)
+                        .orElse(null)
+                )
             );
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.priority")
-                .setIndexFunc(simpleAttribute(Equipment.class, equipment ->
-                    equipment.getSpec() == null || equipment.getSpec().getPriority() == null
-                        ? String.valueOf(0) : equipment.getSpec().getPriority().toString()
-                ))
+            indexSpecs.add(IndexSpecs.<Equipment, Integer>single("spec.priority", Integer.class)
+                .indexFunc(
+                    equipment -> Optional.ofNullable(equipment.getSpec())
+                        .map(Equipment.EquipmentSpec::getPriority)
+                        .orElse(0)
+                )
             );
         });
         schemeManager.register(EquipmentGroup.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.priority")
-                .setIndexFunc(simpleAttribute(EquipmentGroup.class, group ->
-                    group.getSpec() == null || group.getSpec().getPriority() == null
-                        ? String.valueOf(0) : group.getSpec().getPriority().toString()
-                ))
+            indexSpecs.add(IndexSpecs.<EquipmentGroup, Integer>single("spec.priority", Integer.class)
+                .indexFunc(
+                    group -> Optional.ofNullable(group.getSpec())
+                        .map(EquipmentGroup.EquipmentGroupSpec::getPriority)
+                        .orElse(0)
+                )
             );
         });
     }

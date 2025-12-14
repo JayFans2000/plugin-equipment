@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { EquipmentGroup } from "@/types";
-import { submitForm } from "@formkit/core";
 import { axiosInstance } from "@halo-dev/api-client";
 import { VButton, VModal, VSpace } from "@halo-dev/components";
-import { useMagicKeys } from "@vueuse/core";
 import { cloneDeep } from "lodash-es";
 import {computed, nextTick, onMounted, ref, useTemplateRef, watch} from "vue";
 
@@ -83,20 +81,6 @@ onMounted(() => {
     formState.value = cloneDeep(props.group);
   }
 });
-
-const { ControlLeft_Enter, Meta_Enter } = useMagicKeys();
-
-watch(ControlLeft_Enter, (v) => {
-  if (v && !isMac) {
-    submitForm("equipment-group-form");
-  }
-});
-
-watch(Meta_Enter, (v) => {
-  if (v && isMac) {
-    submitForm("equipment-group-form");
-  }
-});
 </script>
 <template>
   <VModal ref="modal" :width="600" :title="modalTitle" @close="emit('close')">
@@ -151,10 +135,10 @@ watch(Meta_Enter, (v) => {
     </div>
     <template #footer>
       <VSpace>
-        <VButton :loading="isSubmitting" type="secondary" @click="submitForm('equipment-group-form')">
-          提交 {{ `${isMac ? "⌘" : "Ctrl"} + ↵` }}
+        <VButton :loading="isSubmitting" type="secondary" @click="$formkit.submit('equipment-group-form')">
+          提交
         </VButton>
-        <VButton @click="emit('close')">取消 Esc</VButton>
+        <VButton @click="emit('close')">取消</VButton>
       </VSpace>
     </template>
   </VModal>

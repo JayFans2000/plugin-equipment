@@ -1,8 +1,7 @@
-import { definePlugin } from "@halo-dev/console-shared";
-import { defineAsyncComponent, markRaw } from "vue";
+import { definePlugin } from "@halo-dev/ui-shared";
+import { markRaw } from "vue";
 import TablerDeviceGamepad3 from '~icons/tabler/device-gamepad-3'
 import "uno.css";
-import { VLoading } from "@halo-dev/components";
 
 export default definePlugin({
   routes: [
@@ -11,10 +10,7 @@ export default definePlugin({
       route: {
         path: "/equipments",
         name: "Equipments",
-        component: defineAsyncComponent({
-          loader: () => import("@/views/EquipmentList.vue"),
-          loadingComponent: VLoading,
-        }),
+        component: () => import("@/views/EquipmentList.vue"),
         meta: {
           permissions: ["plugin:equipment:view"],
           menu: {

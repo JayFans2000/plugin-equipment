@@ -9,7 +9,7 @@ import run.halo.app.extension.ListOptions;
 import run.halo.app.extension.ListResult;
 import run.halo.app.extension.PageRequestImpl;
 import run.halo.app.extension.ReactiveExtensionClient;
-import run.halo.app.extension.index.query.QueryFactory;
+import run.halo.app.extension.index.query.Queries;
 import com.kunkunyu.equipment.Equipment;
 import com.kunkunyu.equipment.EquipmentQuery;
 import com.kunkunyu.equipment.service.EquipmentService;
@@ -42,10 +42,10 @@ class EquipmentServiceImpl implements EquipmentService {
         );
 
         if (StringUtils.isNotBlank(query.getKeyword())) {
-            builder.andQuery(QueryFactory.contains("spec.displayName", query.getKeyword()));
+            builder.andQuery(Queries.contains("spec.displayName", query.getKeyword()));
         }
         if (StringUtils.isNotBlank(query.getGroup())) {
-            builder.andQuery(QueryFactory.equal("spec.groupName", query.getGroup()));
+            builder.andQuery(Queries.equal("spec.groupName", query.getGroup()));
         }
         return builder.build();
     }

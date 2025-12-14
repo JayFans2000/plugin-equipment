@@ -11,7 +11,7 @@ import run.halo.app.extension.ListOptions;
 import run.halo.app.extension.ListResult;
 import run.halo.app.extension.PageRequestImpl;
 import run.halo.app.extension.ReactiveExtensionClient;
-import run.halo.app.extension.index.query.QueryFactory;
+import run.halo.app.extension.index.query.Queries;
 import run.halo.app.theme.finders.Finder;
 import com.kunkunyu.equipment.Equipment;
 import com.kunkunyu.equipment.EquipmentGroup;
@@ -46,7 +46,7 @@ public class EquipmentFInderImpl implements EquipmentFinder {
     private Mono<ListResult<EquipmentVo>> pageEquipment(Integer page, Integer size, String group) {
         var builder = ListOptions.builder();
         if (StringUtils.isNotEmpty(group)) {
-            builder.andQuery(QueryFactory.equal("spec.groupName", group));
+            builder.andQuery(Queries.equal("spec.groupName", group));
         }
         return client.listBy(Equipment.class, builder.build(),
                 PageRequestImpl.of(page, size, defaultSort()))
@@ -62,7 +62,7 @@ public class EquipmentFInderImpl implements EquipmentFinder {
     @Override
     public Flux<EquipmentVo> listBy(String groupName) {
         var options = ListOptions.builder()
-            .andQuery(QueryFactory.equal("spec.groupName", groupName))
+            .andQuery(Queries.equal("spec.groupName", groupName))
             .build();
         return client.listAll(Equipment.class, options, defaultSort()).map(EquipmentVo::from);
     }

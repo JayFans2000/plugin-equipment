@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Equipment } from "@/types";
-import { submitForm } from "@formkit/core";
 import { axiosInstance } from "@halo-dev/api-client";
 import { VSpace, VButton, VModal } from "@halo-dev/components";
 import { cloneDeep } from "lodash-es";
@@ -140,7 +139,8 @@ const handleSaveEquipment = async () => {
     </div>
     <template #footer>
       <VSpace>
-        <VButton :loading="isSubmitting" type="secondary" @click="submitForm('equipment-form')"> 保存 </VButton>
+        <VButton :loading="isSubmitting" type="secondary"
+                 @click="$formkit.submit('equipment-form')"> 保存 </VButton>
         <VButton @click="modal?.close()">取消</VButton>
       </VSpace>
     </template>

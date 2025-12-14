@@ -6,92 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title th:text="${site.title+'-'+title}"></title>
     <link data-n-head="true" rel="icon" type="image/x-icon" th:href="${site.favicon}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4A5568',
-                        secondary: '#718096'
-                    },
-                    borderRadius: {
-                        'none': '0px',
-                        'sm': '2px',
-                        DEFAULT: '4px',
-                        'md': '8px',
-                        'lg': '12px',
-                        'xl': '16px',
-                        '2xl': '20px',
-                        '3xl': '24px',
-                        'full': '9999px',
-                        'button': '4px'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            min-height: 100vh;
-            background-color: #f7fafc;
-        }
-
-        @media (min-width: 1024px) {
-            body {
-                min-height: 1024px;
-            }
-        }
-
-        .product-card {
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .group-block {
-            margin-bottom: 3rem;
-        }
-        .group-block:last-child {
-            margin-bottom: 0;
-        }
-    </style>
+    <th:block th:replace="~{plugin:equipment:modules/style}"></th:block>
 </head>
 
-<body class="text-gray-800">
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-    <th:block th:each="group : ${equipmentFinder.groupBy()}">
-        <div class="mb-6 group-block">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4" th:text="${group.spec.displayName}"></h2>
-            <p class="text-gray-600 text-base sm:text-lg" th:text="${group.spec.description}"></p>
-        </div>
-        <div class="grid grid-cols-1 mb-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 ">
-
-            <div th:each="equipment : ${group.equipments}"
-                 class="bg-white rounded-lg p-6 shadow-sm product-card flex flex-col h-full">
-                <div class="aspect-[4/3] mb-6 overflow-hidden -mx-6 -mt-6 rounded-t-lg">
-                    <img th:src="${equipment.spec.cover}"
-                         class="w-full h-full object-cover object-center" th:alt="${equipment.spec.displayName}">
-                </div>
-                <div class="flex-1">
-                    <h3 class="text-lg sm:text-xl font-bold mb-2" th:text="${equipment.spec.displayName}"></h3>
-                    <p class="text-gray-600 mb-2" th:text="${equipment.spec.specification}"></p>
-                    <p class="text-gray-700" th:text="${equipment.spec.description}"></p>
-                </div>
-                <div th:if="${equipment.spec.url}" class="flex justify-start items-center mt-4">
-                    <a th:href="${equipment.spec.url}" target="_blank" rel="noopener" class="px-6 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors whitespace-nowrap">
-                        详情
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </th:block>
-</div>
+<body>
+    <main class="layout">
+        <th:block th:replace="~{plugin:equipment:modules/equipment}"></th:block>
+    </main>
 </body>
 
 </html>

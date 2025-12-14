@@ -1,14 +1,33 @@
+/// <reference types="@rsbuild/core/types" />
 /// <reference types="unplugin-icons/types/vue" />
 
 export { };
 
 declare module "*.vue" {
-  import Vue from "vue";
-  export default Vue;
+    import type { ComponentOptions } from "vue";
+    const Component: ComponentOptions;
+    export default Component;
 }
+
 
 declare module "axios" {
   export interface AxiosRequestConfig {
     mute?: boolean;
   }
 }
+
+declare module "vue" {
+  interface ComponentCustomProperties {
+    $formkit: any;
+  }
+}
+
+declare global {
+  interface Window {
+    enabledPlugins: {
+      name: string;
+      version: string;
+    }[];
+  }
+}
+
