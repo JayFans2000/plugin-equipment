@@ -1,0 +1,9 @@
+apiVersion: plugin.halo.run/v1alpha1
+kind: ExtensionDefinition
+metadata:
+  name: equipment-comment-subject
+spec:
+  className: com.kunkunyu.equipment.EquipmentCommentSubject
+  extensionPointName: comment-subject
+  displayName: 装备评论主体
+  description: 装备页面评论主体扩展

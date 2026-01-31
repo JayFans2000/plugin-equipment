@@ -10,6 +10,27 @@ Halo 2.0 的装备管理插件, 支持在 Console 进行管理以及为主题端
 3. 内置模板，无需主题支持，但也可以通过主题自定义模板。
 4. 前台访问地址为 `/equipments`，主题提供模板（equipments.html）。
 
+## 评论适配
+
+主题开发者可以参考 [自定义标签](https://docs.halo.run/developer-guide/theme/template-tag/#halocomment)，来为装备页面接入评论功能。
+
+### 参数值
+group：plugin.halo.run
+
+kind: Plugin
+
+name: ${pluginName}
+
+### 示例
+
+```html
+<div th:if="${haloCommentEnabled}">
+    <halo:comment group="equipment.kunkunyu.com"
+      kind="EquipmentPage" th:name="${equipmentName}"
+    />
+</div>
+```
+
 ## 使用文档
 
 https://docs.kunkunyu.com/docs/equipment

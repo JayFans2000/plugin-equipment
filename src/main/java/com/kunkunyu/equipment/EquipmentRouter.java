@@ -7,7 +7,7 @@ import static run.halo.app.theme.router.PageUrlUtils.totalPage;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +17,17 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.kunkunyu.equipment.finders.EquipmentFinder;
+import com.kunkunyu.equipment.vo.EquipmentGroupVo;
+import com.kunkunyu.equipment.vo.EquipmentVo;
+
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 import run.halo.app.plugin.ReactiveSettingFetcher;
 import run.halo.app.theme.TemplateNameResolver;
 import run.halo.app.theme.router.PageUrlUtils;
 import run.halo.app.theme.router.UrlContextListResult;
-import com.kunkunyu.equipment.finders.EquipmentFinder;
-import com.kunkunyu.equipment.vo.EquipmentGroupVo;
-import com.kunkunyu.equipment.vo.EquipmentVo;
 
 /**
  * Provides a <code>/equipments</code> route for the topic end to handle routing.
@@ -60,10 +63,10 @@ public class EquipmentRouter {
                 Map.of("groups", equipmentGroups(),
                     "equipments", equipmentList(request),
                     ModelConst.TEMPLATE_ID, templateName,
-                    "title", getEquipmentTitle()
+                    "title", getEquipmentTitle(),
+                    "equipmentName", EquipmentPage.SINGLETON_NAME
                 ))
             );
-
     }
     
     private Mono<UrlContextListResult<EquipmentVo>> equipmentList(ServerRequest request) {

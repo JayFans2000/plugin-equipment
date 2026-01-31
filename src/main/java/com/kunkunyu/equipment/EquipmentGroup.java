@@ -1,6 +1,9 @@
 package com.kunkunyu.equipment;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +17,7 @@ import run.halo.app.extension.GVK;
     plural = "equipmentgroups", singular = "equipmentgroup")
 public class EquipmentGroup extends AbstractExtension {
 
-    @Schema(required = true)
+    @Schema(requiredMode = REQUIRED)
     private EquipmentGroupSpec spec;
 
     @Schema
@@ -22,7 +25,7 @@ public class EquipmentGroup extends AbstractExtension {
 
     @Data
     public static class EquipmentGroupSpec {
-        @Schema(required = true)
+        @Schema(requiredMode = REQUIRED)
         private String displayName;
 
         private String description;

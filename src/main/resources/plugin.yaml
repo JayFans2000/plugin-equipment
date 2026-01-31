@@ -6,7 +6,7 @@ metadata:
     "store.halo.run/app-id": "app-ytygyqml"
 spec:
   enabled: true
-  version: 1.1.0
+  version: 1.1.1
   requires: ">=2.22.0"
   author:
     name: 困困鱼

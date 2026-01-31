@@ -1,13 +1,15 @@
 package com.kunkunyu.equipment;
 
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
+
 import run.halo.app.extension.Scheme;
 import run.halo.app.extension.SchemeManager;
 import run.halo.app.extension.index.IndexSpecs;
 import run.halo.app.plugin.BasePlugin;
 import run.halo.app.plugin.PluginContext;
-import java.util.Optional;
 
 @Component
 public class EquipmentPlugin extends BasePlugin {
@@ -20,6 +22,9 @@ public class EquipmentPlugin extends BasePlugin {
 
     @Override
     public void start() {
+        // 注册 EquipmentPage 类型（用于评论功能）
+        schemeManager.register(EquipmentPage.class);
+        
         schemeManager.register(Equipment.class, indexSpecs -> {
             indexSpecs.add(IndexSpecs.<Equipment, String>single("spec.groupName", String.class)
                 .indexFunc(
@@ -56,6 +61,7 @@ public class EquipmentPlugin extends BasePlugin {
 
     @Override
     public void stop() {
+        schemeManager.unregister(Scheme.buildFromType(EquipmentPage.class));
         schemeManager.unregister(Scheme.buildFromType(Equipment.class));
         schemeManager.unregister(Scheme.buildFromType(EquipmentGroup.class));
     }
